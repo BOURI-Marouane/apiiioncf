@@ -1,14 +1,10 @@
 package com.example.demo.web;
 
 import com.example.demo.dto.StationBusDto;
-import com.example.demo.model.Gare;
-import com.example.demo.model.StationBus;
-import com.example.demo.model.StationTaxi;
-import com.example.demo.model.StationTram;
-import com.example.demo.service.imp.GareService;
-import com.example.demo.service.imp.StationBusService;
-import com.example.demo.service.imp.StationTaxiService;
-import com.example.demo.service.imp.StationTramService;
+import com.example.demo.dto.Trajetdto;
+import com.example.demo.model.*;
+import com.example.demo.repository.TrainRepository;
+import com.example.demo.service.imp.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +18,9 @@ import java.util.List;
 public class GareController {
 
     @Autowired
+    TrainRepository trainRepository;
+
+    @Autowired
     private GareService gareService;
 
     @Autowired
@@ -33,6 +32,9 @@ public class GareController {
     @Autowired
     private StationTaxiService stationTaxiService;
 
+    @Autowired
+    private TrajetService trajetService;
+
     ///////////// Web gare /////////////////////////////////////////////////
 
     @PostMapping("/gare/save")
@@ -40,6 +42,7 @@ public class GareController {
     {
         return gareService.save(gare);
     }
+
 
     @PostMapping("/gare/all")
     private List<Gare> findAllGare()
@@ -94,4 +97,29 @@ public class GareController {
     {
         return stationTaxiService.findAll();
     }
+
+    //////////////////////////////// Trajet web ////////////////////////////////////////
+
+    @PostMapping("/trajet/save")
+    private List<Trajet> save(@RequestBody Trajetdto trajetdto)
+    {
+        return trajetService.save(trajetdto);
+    }
+
+    @PostMapping("/trajet/findTrajet")
+    private List<Trajet> find(@RequestBody Trajetdto trajetdto)
+    {
+        return trajetService.findByDate(trajetdto.getDateDepart(),trajetdto.getGareDepart(),trajetdto.getGareArrive());
+
+    }
+
+    /////////////////////////////// Train Web ////////////////////////////////////////////
+
+    @PostMapping("/train/save")
+    private Train save(@RequestBody Train train)
+    {
+        return trainRepository.save(train);
+    }
+
+
 }

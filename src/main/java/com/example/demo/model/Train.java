@@ -23,8 +23,16 @@ public class Train {
 
     private Date dateArrive;
 
+    private String name;
+
+    private String designation;
+
   /*  @ManyToOne
     @JoinColumn(name="gare_id", nullable = true)
     @JsonIgnore
     private Gare gare_id;*/
+
+    @OneToOne(mappedBy = "train")
+    @JsonIgnore
+    private Trajet trajetArrive;
 }

@@ -38,4 +38,12 @@ public class Gare {
     /*@OneToMany(mappedBy = "gare_id")
     private List<Train> trains;*/
 
+    @OneToOne(mappedBy = "gareDepart")
+    @JsonIgnore
+    private Trajet trajetDepart;
+
+    @OneToOne(mappedBy = "gareArrive")
+    @JsonIgnore
+    private Trajet trajetArrive;
+
 }
